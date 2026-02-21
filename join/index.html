@@ -16,11 +16,6 @@
       text-align:center;
     }
 
-    h1 {
-      font-weight:300;
-      margin-bottom:10px;
-    }
-
     #join-box {
       background:#222;
       padding:25px;
@@ -39,7 +34,6 @@
       margin-top:10px;
       font-size:18px;
       text-align:center;
-      font-family:'Poppins', sans-serif;
     }
 
     #join-btn {
@@ -51,7 +45,6 @@
       color:white;
       font-size:18px;
       cursor:pointer;
-      font-weight:300;
       width:100%;
     }
 
@@ -59,31 +52,11 @@
       background:#43a047;
       transform:scale(1.03);
     }
-
-    #back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background:#333;
-      color:white;
-      border:none;
-      padding:10px 16px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:300;
-    }
-
-    #back-btn:hover {
-      background:#444;
-    }
   </style>
 </head>
 <body>
 
-  <button id="back-btn" onclick="window.location.href='../'">← Zurück</button>
-
   <h1>Quiz beitreten</h1>
-  <p>Gib den PIN ein oder scanne den QR‑Code.</p>
 
   <div id="join-box">
     <input id="pin-input" type="text" placeholder="PIN eingeben" maxlength="6">
@@ -91,7 +64,6 @@
   </div>
 
   <script>
-    // PIN aus URL übernehmen (QR-Code)
     const params = new URLSearchParams(window.location.search);
     const pinFromQR = params.get("pin");
 
@@ -107,8 +79,7 @@
         return;
       }
 
-      // später: Verbindung zum Host herstellen
-      alert("Du würdest jetzt dem Spiel mit PIN " + pin + " beitreten.");
+      window.location.href = "../play/?pin=" + pin;
     }
   </script>
 
