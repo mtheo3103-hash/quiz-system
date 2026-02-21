@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz hosten</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background:#111;
+      color:#fff;
+      margin:0;
+      padding:20px;
+      text-align:center;
+    }
+
+    h1 {
+      font-weight:300;
+      margin-bottom:10px;
+    }
+
+    #pin-box {
+      background:#222;
+      padding:20px;
+      border-radius:12px;
+      display:inline-block;
+      margin-top:20px;
+      box-shadow:0 0 20px rgba(0,0,0,0.4);
+    }
+
+    #pin {
+      font-size:48px;
+      font-weight:400;
+      letter-spacing:6px;
+      margin:10px 0;
+    }
+
+    #qr {
+      margin-top:20px;
+    }
+
+    #start-btn {
+      margin-top:30px;
+      padding:12px 20px;
+      background:#4caf50;
+      border:none;
+      border-radius:8px;
+      color:white;
+      font-size:18px;
+      cursor:pointer;
+      font-weight:300;
+    }
+
+    #start-btn:hover {
+      background:#43a047;
+      transform:scale(1.03);
+    }
+
+    #back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background:#333;
+      color:white;
+      border:none;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:300;
+    }
+
+    #back-btn:hover {
+      background:#444;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="back-btn" onclick="window.location.href='../'">← Zurück</button>
+
+  <h1>Quiz hosten</h1>
+  <p>Teile den PIN oder den QR‑Code mit den Spielern.</p>
+
+  <div id="pin-box">
+    <div id="pin">----</div>
+    <canvas id="qr"></canvas>
+  </div>
+
+  <button id="start-btn" onclick="startGame()">Spiel starten</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+  <script>
+    // PIN generieren
+    function generatePIN() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    const pin = generatePIN();
+    document.getElementById("pin").textContent = pin;
+
+    // QR-Code erzeugen
+    const qr = new QRious({
+      element: document.getElementById("qr"),
+      size: 200,
+      value: window.location.origin + window.location.pathname.replace("host/", "join/") + "?pin=" + pin
+    });
+
+    // Quiz laden
+    const quiz = JSON.parse(localStorage.getItem("quiz")) || [];
+
+    function startGame() {
+      if (quiz.length === 0) {
+        alert("Es wurden noch keine Fragen erstellt!");
+        return;
+      }
+
+      // später: Weiterleitung zur Host-Control-Seite
+      alert("Spiel würde jetzt starten (Host‑Steuerung kommt später)");
+    }
+  </script>
+
+</body>
+</html>
