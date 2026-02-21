@@ -95,6 +95,9 @@
   <label>Frage:</label>
   <input id="frage" type="text">
 
+  <label>Bild zur Frage (optional):</label>
+  <input id="image" type="file" accept="image/*">
+
   <label>Antwort A:</label>
   <input id="a" type="text">
 
@@ -150,20 +153,33 @@
       const c = document.getElementById("c").value;
       const d = document.getElementById("d").value;
       const correct = parseInt(document.getElementById("correct").value);
+      const imageInput = document.getElementById("image");
 
       if (!frage || !a || !b || !c || !d) {
         alert("Bitte alle Felder ausfüllen!");
         return;
       }
 
-      /* Plopp beim Hinzufügen */
       const rect = event.target.getBoundingClientRect();
       plopp(rect.left + rect.width / 2, rect.top + rect.height / 2, "#4caf50");
 
+      if (imageInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          saveQuestion(frage, a, b, c, d, correct, e.target.result);
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        saveQuestion(frage, a, b, c, d, correct, null);
+      }
+    }
+
+    function saveQuestion(frage, a, b, c, d, correct, imageData) {
       quiz.push({
         question: frage,
         answers: [a, b, c, d],
-        correct: correct
+        correct: correct,
+        image: imageData
       });
 
       localStorage.setItem("quiz", JSON.stringify(quiz));
@@ -174,10 +190,10 @@
       document.getElementById("b").value = "";
       document.getElementById("c").value = "";
       document.getElementById("d").value = "";
+      document.getElementById("image").value = "";
     }
 
     function deleteQuestion(index, event) {
-      /* Plopp beim Löschen */
       const rect = event.target.getBoundingClientRect();
       plopp(rect.left + rect.width / 2, rect.top + rect.height / 2, "#c62828");
 
@@ -195,6 +211,7 @@
         box.className = "question-box";
         box.innerHTML = `
           <b>${i+1}. ${q.question}</b><br>
+          ${q.image ? `<img src="${q.image}" style="width:100%; border-radius:8px; margin:8px 0;">` : ""}
           A: ${q.answers[0]}<br>
           B: ${q.answers[1]}<br>
           C: ${q.answers[2]}<br>
@@ -209,5 +226,7 @@
     renderList();
   </script>
 
+</body>
+</html>
 </body>
 </html> 
