@@ -90,6 +90,7 @@
 
   <button id="start-btn" onclick="startGame()">Spiel starten</button>
 
+  <!-- QR-Code Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
   <script>
@@ -105,7 +106,7 @@
     const qr = new QRious({
       element: document.getElementById("qr"),
       size: 200,
-      value: window.location.origin + window.location.pathname.replace("host/", "join/") + "?pin=" + pin
+      value: window.location.origin + "/quiz-system/join/?pin=" + pin
     });
 
     // Quiz laden
@@ -117,8 +118,8 @@
         return;
       }
 
-      // später: Weiterleitung zur Host-Control-Seite
-      alert("Spiel würde jetzt starten (Host‑Steuerung kommt später)");
+      // Weiterleitung zur Host-Control-Seite
+      window.location.href = "control.html";
     }
   </script>
 
