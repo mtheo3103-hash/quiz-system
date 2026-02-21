@@ -90,11 +90,9 @@
 
   <button id="start-btn" onclick="startGame()">Spiel starten</button>
 
-  <!-- QR-Code Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
   <script>
-    // PIN generieren
     function generatePIN() {
       return Math.floor(100000 + Math.random() * 900000).toString();
     }
@@ -102,14 +100,12 @@
     const pin = generatePIN();
     document.getElementById("pin").textContent = pin;
 
-    // QR-Code erzeugen
     const qr = new QRious({
       element: document.getElementById("qr"),
       size: 200,
       value: window.location.origin + "/quiz-system/join/?pin=" + pin
     });
 
-    // Quiz laden
     const quiz = JSON.parse(localStorage.getItem("quiz")) || [];
 
     function startGame() {
@@ -118,7 +114,6 @@
         return;
       }
 
-      // Weiterleitung zur Host-Control-Seite
       window.location.href = "control.html";
     }
   </script>
