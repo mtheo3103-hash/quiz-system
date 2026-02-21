@@ -60,13 +60,7 @@
       color:white;
       font-size:18px;
       cursor:pointer;
-      font-weight:300;
       display:none;
-    }
-
-    #next-btn:hover {
-      background:#43a047;
-      transform:scale(1.03);
     }
   </style>
 </head>
@@ -110,9 +104,9 @@
       const correct = quiz[index].correct;
       const buttons = document.querySelectorAll(".answer-btn");
 
-      buttons[correct].style.background = "#2e7d32"; // grün
+      buttons[correct].style.background = "#2e7d32";
       if (choice !== correct) {
-        buttons[choice].style.background = "#c62828"; // rot
+        buttons[choice].style.background = "#c62828";
       }
 
       document.getElementById("next-btn").style.display = "inline-block";
