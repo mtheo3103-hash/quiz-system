@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Quiz System</title>
+
+  <!-- Schriftart: Poppins ExtraLight -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -13,34 +16,48 @@
       justify-content:center;
       align-items:center;
       height:100vh;
-      text-align:center;
+      margin:0;
     }
+
     .menu {
       background:#222;
       padding:30px;
-      border-radius:10px;
-      width:300px;
+      border-radius:12px;
+      width:320px;
+      text-align:center;
+      box-shadow:0 0 20px rgba(0,0,0,0.4);
     }
+
+    h1 {
+      font-weight:300;
+      margin-bottom:20px;
+    }
+
     a {
       display:block;
-      margin:10px 0;
-      padding:12px;
+      margin:12px 0;
+      padding:14px;
       background:#4caf50;
       color:white;
       text-decoration:none;
-      border-radius:5px;
+      border-radius:6px;
       font-weight:300;
+      transition:0.2s;
     }
+
     a:hover {
       background:#43a047;
+      transform:scale(1.03);
     }
   </style>
 </head>
 <body>
+
   <div class="menu">
     <h1>Quiz System</h1>
     <a href="create/">Quiz erstellen</a>
     <a href="play/">Quiz spielen</a>
   </div>
+
 </body>
 </html>
