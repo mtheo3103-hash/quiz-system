@@ -2,212 +2,45 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz erstellen</title>
-
-  <!-- Schriftart: Poppins ExtraLight -->
+  <title>Quiz System</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
-
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      font-weight: 200;
       background:#111;
       color:#fff;
-      padding:20px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      text-align:center;
     }
-
-    h1, h2 {
-      font-weight: 300;
-    }
-
-    input, select {
-      width:100%;
-      padding:8px;
-      margin:5px 0;
-      border-radius:5px;
-      border:none;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 200;
-    }
-
-    button {
-      padding:10px;
-      width:100%;
-      background:#4caf50;
-      border:none;
-      border-radius:5px;
-      color:#fff;
-      cursor:pointer;
-      margin-top:10px;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 300;
-    }
-
-    button:hover {
-      background:#43a047;
-    }
-
-    .question-box {
+    .menu {
       background:#222;
-      padding:10px;
+      padding:30px;
+      border-radius:10px;
+      width:300px;
+    }
+    a {
+      display:block;
+      margin:10px 0;
+      padding:12px;
+      background:#4caf50;
+      color:white;
+      text-decoration:none;
       border-radius:5px;
-      margin-top:10px;
-      font-weight: 300;
+      font-weight:300;
     }
-
-    .delete-btn {
-      background:#c62828;
-      margin-top:8px;
-    }
-
-    .delete-btn:hover {
-      background:#b71c1c;
-    }
-
-    /* Partikel-Animation */
-    .particle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #4caf50;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.8;
-      animation: pop 600ms ease-out forwards;
-    }
-
-    @keyframes pop {
-      0% {
-        transform: scale(0.3) translate(0, 0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1.2) translate(var(--dx), var(--dy));
-        opacity: 0;
-      }
+    a:hover {
+      background:#43a047;
     }
   </style>
 </head>
 <body>
-
-  <h1>Quiz erstellen</h1>
-
-  <label>Frage:</label>
-  <input id="frage" type="text">
-
-  <label>Antwort A:</label>
-  <input id="a" type="text">
-
-  <label>Antwort B:</label>
-  <input id="b" type="text">
-
-  <label>Antwort C:</label>
-  <input id="c" type="text">
-
-  <label>Antwort D:</label>
-  <input id="d" type="text">
-
-  <label>Richtige Antwort:</label>
-  <select id="correct">
-    <option value="0">A</option>
-    <option value="1">B</option>
-    <option value="2">C</option>
-    <option value="3">D</option>
-  </select>
-
-  <button onclick="addQuestion(event)">Frage hinzufügen</button>
-
-  <h2>Erstellte Fragen</h2>
-  <div id="list"></div>
-
-  <script>
-    let quiz = JSON.parse(localStorage.getItem("quiz")) || [];
-
-    /* Partikel-Plopp */
-    function plopp(x, y, color="#4caf50") {
-      for (let i = 0; i < 12; i++) {
-        const particle = document.createElement("div");
-        particle.className = "particle";
-        particle.style.background = color;
-
-        const angle = Math.random() * Math.PI * 2;
-        const distance = 40 + Math.random() * 20;
-
-        particle.style.left = x + "px";
-        particle.style.top = y + "px";
-        particle.style.setProperty("--dx", Math.cos(angle) * distance + "px");
-        particle.style.setProperty("--dy", Math.sin(angle) * distance + "px");
-
-        document.body.appendChild(particle);
-        setTimeout(() => particle.remove(), 600);
-      }
-    }
-
-    function addQuestion(event) {
-      const frage = document.getElementById("frage").value;
-      const a = document.getElementById("a").value;
-      const b = document.getElementById("b").value;
-      const c = document.getElementById("c").value;
-      const d = document.getElementById("d").value;
-      const correct = parseInt(document.getElementById("correct").value);
-
-      if (!frage || !a || !b || !c || !d) {
-        alert("Bitte alle Felder ausfüllen!");
-        return;
-      }
-
-      /* Plopp beim Hinzufügen */
-      const rect = event.target.getBoundingClientRect();
-      plopp(rect.left + rect.width / 2, rect.top + rect.height / 2, "#4caf50");
-
-      quiz.push({
-        question: frage,
-        answers: [a, b, c, d],
-        correct: correct
-      });
-
-      localStorage.setItem("quiz", JSON.stringify(quiz));
-      renderList();
-
-      document.getElementById("frage").value = "";
-      document.getElementById("a").value = "";
-      document.getElementById("b").value = "";
-      document.getElementById("c").value = "";
-      document.getElementById("d").value = "";
-    }
-
-    function deleteQuestion(index, event) {
-      /* Plopp beim Löschen */
-      const rect = event.target.getBoundingClientRect();
-      plopp(rect.left + rect.width / 2, rect.top + rect.height / 2, "#c62828");
-
-      quiz.splice(index, 1);
-      localStorage.setItem("quiz", JSON.stringify(quiz));
-      renderList();
-    }
-
-    function renderList() {
-      const list = document.getElementById("list");
-      list.innerHTML = "";
-
-      quiz.forEach((q, i) => {
-        const box = document.createElement("div");
-        box.className = "question-box";
-        box.innerHTML = `
-          <b>${i+1}. ${q.question}</b><br>
-          A: ${q.answers[0]}<br>
-          B: ${q.answers[1]}<br>
-          C: ${q.answers[2]}<br>
-          D: ${q.answers[3]}<br>
-          <i>Richtig: ${["A","B","C","D"][q.correct]}</i><br>
-          <button class="delete-btn" onclick="deleteQuestion(${i}, event)">Frage löschen</button>
-        `;
-        list.appendChild(box);
-      });
-    }
-
-    renderList();
-  </script>
-
+  <div class="menu">
+    <h1>Quiz System</h1>
+    <a href="create/">Quiz erstellen</a>
+    <a href="play/">Quiz spielen</a>
+  </div>
 </body>
-</html> 
+</html>
